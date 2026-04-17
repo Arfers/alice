@@ -30,12 +30,12 @@ container.addEventListener('scroll', () => {
   }
 
   const cards = document.querySelectorAll('.card');
-  const cardHeight = container.querySelector('.card').offsetHeight;
+  const lastCard = cards[cards.length - 1];
 
-  const currentIndex = Math.round(container.scrollTop / cardHeight);
+  const rect = lastCard.getBoundingClientRect();
 
-  // почти дошли до конца
-  if (currentIndex >= cards.length - 2 && lastCardIndex !== currentIndex) {
+  // когда последняя карточка почти в зоне экрана
+  if (rect.top < window.innerHeight * 0.8) {
 
     reshuffleCards();
 
@@ -44,10 +44,9 @@ container.addEventListener('scroll', () => {
         top: 0,
         behavior: 'auto'
       });
-    }, 50);
+    }, 100);
   }
 
-  lastCardIndex = currentIndex;
 });
 
 function shuffle(array) {
