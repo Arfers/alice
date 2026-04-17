@@ -81,3 +81,6 @@ function reshuffleCards() {
 
   cards.forEach(card => container.appendChild(card));
 }
+window.translate = translate;
+window.togglePanel = togglePanel;
+window.flipCard = flipCard;
