@@ -195,7 +195,6 @@ input {
   height: 100%;
   backface-visibility: hidden;
   box-sizing: border-box;
-  overflow: hidden;
 
   background: #111;
   border-radius: 25px;
@@ -204,6 +203,28 @@ input {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.meaning {
+  margin-top: 15px;
+  font-size: 18px;
+  opacity: 0.8;
+  text-align: center;
+}
+
+.example {
+  margin-top: 10px;
+  font-style: italic;
+  opacity: 0.6;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .word {
+    font-size: 34px;
+  }
 }
 
 .back {
@@ -261,9 +282,9 @@ input {
 @media (max-width: 600px) {
 
   .card-box {
-    height: 75vh;
-    padding: 20px;
-    border-radius: 20px;
+    height: 60vh;
+    padding: 18px;
+    border-radius: 18px;
   }
 
   .word {
