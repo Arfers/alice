@@ -84,3 +84,6 @@ function reshuffleCards() {
 window.translate = translate;
 window.togglePanel = togglePanel;
 window.flipCard = flipCard;
+
+document.getElementById("translateBtn")
+  .addEventListener("click", translate);
