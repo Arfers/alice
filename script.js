@@ -2,18 +2,36 @@ function togglePanel() {
   document.getElementById("panel").classList.toggle("open");
 }
 
-function translate() {
-  let text = document.getElementById("input").value.toLowerCase();
-  let result = "Не найдено";
+async function translate() {
+  const input = document.getElementById("input").value;
+  const output = document.getElementById("output");
 
-  if (text.includes("dead")) result = "очень смешно";
-  else if (text.includes("flex")) result = "хвастаться";
-  else if (text.includes("ghost")) result = "прекратить общение";
-  else if (text.includes("slay")) result = "выглядеть круто";
+  if (!input.trim()) {
+    output.innerText = "Введите текст";
+    return;
+  }
 
-  document.getElementById("output").innerText = result;
+  // красивый loading
+  output.innerText = "Перевожу...";
+
+  try {
+    const response = await fetch("https://alice-ai-3fqj.onrender.com/translate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ text: input })
+    });
+
+    const data = await response.json();
+
+    output.innerText = data.result;
+
+  } catch (err) {
+    output.innerText = "Ошибка подключения";
+    console.error(err);
+  }
 }
-
 function flipCard(card) {
   card.classList.toggle("flipped");
 }
