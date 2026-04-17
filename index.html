@@ -82,20 +82,31 @@ html, body {
   position: fixed;
   right: 20px;
   bottom: 30px;
-  background: #a855f7;
-  border: none;
-  padding: 15px 20px;
+
+  padding: 14px 18px;
+  border-radius: 18px;
+
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
   color: white;
-  cursor: pointer;
-  border-radius: 15px;
-  font-size: 16px;
-  font-weight: bold;
-  z-index: 1500;
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+  font-weight: 600;
+  font-size: 14px;
+
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
 
+  border: none;
+  cursor: pointer;
+
+  z-index: 1500;
+
+  box-shadow: 0 10px 30px rgba(168, 85, 247, 0.5);
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(168, 85, 247, 0.7);
 }
 
 .button:hover {
@@ -121,6 +132,8 @@ html, body {
   background: #111;
   padding: 20px;
   transition: 0.3s;
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255,255,255,0.05);
 }
 
 .panel.open {
@@ -129,6 +142,38 @@ html, body {
 
 .panel h2 {
   text-align: center;
+}
+
+input {
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 14px;
+  outline: none;
+}
+
+.panel button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  color: white;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 12px;
+
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+
+  font-size: 16px;
 }
 
 input {
@@ -351,15 +396,15 @@ input {
 
   <div class="header">
   <div class="logo">⚠</div>
-  <div class="title">фикс скролла от рандом карт</div>
+  <div class="title">Красивый переводчик</div>
 </div>
 
-<button class="button" onclick="togglePanel()">SLANG ↔ FORMAL</button>
+<button class="button" onclick="togglePanel()">⚡Slang ↔ Formal📖</button>
 
 <div class="panel" id="panel">
 <div class="back-btn" onclick="togglePanel()">← Назад</div>
 
-  <h2>Разговорный ↔ Формальный</h2>
+  <h2>Переводчик стилей</h2>
   <input id="input" placeholder="I'm dead bro">
   <button onclick="translate()">Перевести</button>
   <div class="result" id="output"></div>
@@ -522,6 +567,166 @@ input {
       <div class="back">
         <div class="example">That’s so skibidi</div>
         <div class="meaning">Источник: мемы</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RIZZ -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">RIZZ</div>
+        <div class="meaning">харизма / умение флиртовать</div>
+      </div>
+      <div class="back">
+        <div class="example">He’s got insane rizz</div>
+        <div class="meaning">Источник: TikTok, стримы</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NPC -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">NPC</div>
+        <div class="meaning">человек без своей позиции</div>
+      </div>
+      <div class="back">
+        <div class="example">Stop acting like an NPC</div>
+        <div class="meaning">Источник: игры, интернет</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MID -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">MID</div>
+        <div class="meaning">средний, ничем не выделяется</div>
+      </div>
+      <div class="back">
+        <div class="example">That movie was mid</div>
+        <div class="meaning">Источник: интернет, обзоры</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COOKED -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">COOKED</div>
+        <div class="meaning">всё плохо, провал</div>
+      </div>
+      <div class="back">
+        <div class="example">Bro is cooked</div>
+        <div class="meaning">Источник: TikTok, мемы</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AURA -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">AURA</div>
+        <div class="meaning">энергия, впечатление от человека</div>
+      </div>
+      <div class="back">
+        <div class="example">He has a strong aura</div>
+        <div class="meaning">Источник: соцсети</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUS -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">SUS</div>
+        <div class="meaning">подозрительный</div>
+      </div>
+      <div class="back">
+        <div class="example">That’s kinda sus</div>
+        <div class="meaning">Источник: игры (Among Us)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- W -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">W</div>
+        <div class="meaning">победа, успех</div>
+      </div>
+      <div class="back">
+        <div class="example">That’s a huge W</div>
+        <div class="meaning">Источник: стримы, чат</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- L -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">L</div>
+        <div class="meaning">провал, неудача</div>
+      </div>
+      <div class="back">
+        <div class="example">Take the L bro</div>
+        <div class="meaning">Источник: интернет</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BET -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">BET</div>
+        <div class="meaning">ок, договорились</div>
+      </div>
+      <div class="back">
+        <div class="example">You coming? — Bet</div>
+        <div class="meaning">Источник: разговорный английский</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOWKEY -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">LOWKEY</div>
+        <div class="meaning">немного, скрыто</div>
+      </div>
+      <div class="back">
+        <div class="example">I lowkey like this song</div>
+        <div class="meaning">Источник: соцсети</div>
       </div>
     </div>
   </div>
