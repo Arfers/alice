@@ -296,20 +296,31 @@ input {
 
 .scroll-global {
   position: fixed;
-  bottom: 20px;
+  bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
   
-  font-size: 14px;
-  opacity: 0.5;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+
+  color: rgba(255,255,255,0.7);
+  background: rgba(168, 85, 247, 0.1);
+  
+  padding: 8px 14px;
+  border-radius: 12px;
+
+  backdrop-filter: blur(10px);
   
   animation: bounce 1.5s infinite;
   pointer-events: none;
+
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(10px); }
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 10px); }
 }
 
 #global-hint {
@@ -375,11 +386,6 @@ input {
     border-radius: 12px;
   }
 
-  .scroll-global {
-    font-size: 12px;
-    bottom: 10px;
-  }
-
   #global-hint {
     font-size: 12px;
     top: 70px;
@@ -396,7 +402,7 @@ input {
 
   <div class="header">
   <div class="logo">⚠</div>
-  <div class="title">гпт апи, транслейт() не найден 1</div>
+  <div class="title">Вот как поп-культура влияет на английский язык</div>
 </div>
 
 <button class="button" onclick="togglePanel()">⚡Slang ↔ Formal📖</button>
