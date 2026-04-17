@@ -35,7 +35,7 @@ container.addEventListener('scroll', () => {
   const rect = lastCard.getBoundingClientRect();
 
   // когда последняя карточка почти в зоне экрана
-  if (rect.top < window.innerHeight * 0.8) {
+  if (rect.top < window.innerHeight * 0.3) {
 
     reshuffleCards();
 
