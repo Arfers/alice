@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Alice's project</title>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background: #0a0a0a;
+  color: white;
+}
+
+.container {
+  margin-top: 60px;
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+/* карточка как в тиктоке */
+.card {
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* внутренняя карточка */
+.card-box {
+  width: 90%;
+  max-width: 440px;
+  height: 700px;
+  perspective: 1400px;
+  background: #111;
+  border-radius: 25px;
+  padding: 30px;
+  box-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-box:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 60px rgba(168, 85, 247, 0.6);
+}
+
+/* слово */
+.word {
+  font-size: 60px;
+  font-weight: bold;
+  color: #a855f7;
+  text-align: center;
+}
+
+/* текст */
+.meaning {
+  margin-top: 20px;
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+.example {
+  margin-top: 10px;
+  font-style: italic;
+  opacity: 0.6;
+}
+
+.button {
+  position: fixed;
+  right: 20px;
+  bottom: 30px;
+  background: #a855f7;
+  border: none;
+  padding: 15px 20px;
+  color: white;
+  cursor: pointer;
+  border-radius: 15px;
+  font-size: 16px;
+  z-index: 1500;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+}
+
+@media (max-width: 600px) {
+  .button {
+    bottom: 90px;
+    }
+}
+
+/* панель */
+.panel {
+  position: fixed;
+  z-index: 2000;
+  right: -100%;
+  top: 0;
+  width: 100%;
+  max-width: 350px;
+  height: 100%;
+  background: #111;
+  padding: 20px;
+  transition: 0.3s;
+}
+
+.panel.open {
+  right: 0;
+}
+
+.panel h2 {
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #222;
+  border: none;
+  color: white;
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  background: lab(24.59% 52.07 -36.17 / 0.452);
+  backdrop-filter: blur(10px);
+
+  z-index: 1;
+}
+
+.logo {
+  font-size: 20px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+}
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0.7;
+  color: hsl(271, 97%, 74%);
+}
+
+.back-btn:hover {
+  opacity: 1;
+}
+
+  .inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.card-box.flipped .inner {
+  transform: rotateY(180deg);
+}
+
+.card-box:active {
+  transform: scale(0.98);
+}
+
+.front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  background: #111;
+  border-radius: 25px;
+  padding: 30px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+.hint {
+  margin-top: auto;
+  font-size: 12px;
+  opacity: 0.4;
+  text-align: center;
+}
+
+.scroll-global {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  font-size: 14px;
+  opacity: 0.5;
+  
+  animation: bounce 1.5s infinite;
+  pointer-events: none;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+#global-hint {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  background: rgba(0,0,0,0.7);
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 14px;
+  
+  opacity: 0;
+  animation: showHint 2.5s ease forwards;
+  z-index: 2000;
+}
+
+@keyframes showHint {
+  0% { opacity: 0; transform: translate(-50%, -10px); }
+  20% { opacity: 1; transform: translate(-50%, 0); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -10px); }
+}
+
+</style>
+
+</head>
+
+<body>
+
+  <div class="header">
+  <div class="logo">⚠</div>
+  <div class="title">Костикова Алиса 10 "Г"</div>
+</div>
+
+<button class="button" onclick="togglePanel()">Переводчик</button>
+
+<div class="panel" id="panel">
+
+<div class="back-btn" onclick="togglePanel()">← Назад</div>
+
+  <h2>Разговорный - Формальный</h2>
+  <input id="input" placeholder="I'm dead bro">
+  <button onclick="translate()">Перевести</button>
+  <div class="result" id="output"></div>
+</div>
+
+<div id="global-hint">Нажми на карточку</div>
+<div class="container">
+<!-- SLAY -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">SLAY</div>
+        <div class="meaning">выглядеть отлично</div>
+      </div>
+      <div class="back">
+        <div class="example">She slayed that performance</div>
+        <div class="meaning">Источник: соцсети, поп-культура</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GHOST -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">GHOST</div>
+        <div class="meaning">прекратить общение</div>
+      </div>
+      <div class="back">
+        <div class="example">He ghosted me after the date</div>
+        <div class="meaning">Источник: интернет</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FLEX -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">FLEX</div>
+        <div class="meaning">хвастаться</div>
+      </div>
+      <div class="back">
+        <div class="example">He’s flexing his new car</div>
+        <div class="meaning">Источник: хип-хоп</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIBE -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">VIBE</div>
+        <div class="meaning">атмосфера</div>
+      </div>
+      <div class="back">
+        <div class="example">This place has a good vibe</div>
+        <div class="meaning">Источник: музыка, соцсети</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DRIP -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">DRIP</div>
+        <div class="meaning">стильный внешний вид</div>
+      </div>
+      <div class="back">
+        <div class="example">His outfit is pure drip</div>
+        <div class="meaning">Источник: мода</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CRINGE -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">CRINGE</div>
+        <div class="meaning">неловко</div>
+      </div>
+      <div class="back">
+        <div class="example">That video was so cringe</div>
+        <div class="meaning">Источник: интернет</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DEAD -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">DEAD</div>
+        <div class="meaning">очень смешно</div>
+      </div>
+      <div class="back">
+        <div class="example">I’m dead 💀</div>
+        <div class="meaning">Источник: мемы</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ICONIC -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">ICONIC</div>
+        <div class="meaning">культовый</div>
+      </div>
+      <div class="back">
+        <div class="example">That moment was iconic</div>
+        <div class="meaning">Источник: поп-культура</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELULU -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">DELULU</div>
+        <div class="meaning">наивный</div>
+      </div>
+      <div class="back">
+        <div class="example">That’s delulu</div>
+        <div class="meaning">Источник: TikTok</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SKIBIDI -->
+<div class="card">
+  <div class="card-box" onclick="flipCard(this)">
+    <div class="inner">
+      <div class="front">
+        <div class="word">SKIBIDI</div>
+        <div class="meaning">мемное слово</div>
+      </div>
+      <div class="back">
+        <div class="example">That’s so skibidi</div>
+        <div class="meaning">Источник: мемы</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="scroll-global">↓ свайп</div>
+
+<script src="script.js"></script>
+</body>
+</html>
