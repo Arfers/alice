@@ -20,8 +20,9 @@ html, body {
   margin-top: 60px;
   height: 100vh;
   overflow-y: scroll;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* карточка как в тиктоке */
@@ -88,8 +89,18 @@ html, body {
   cursor: pointer;
   border-radius: 15px;
   font-size: 16px;
+  font-weight: bold;
   z-index: 1500;
   box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.9);
 }
 
 @media (max-width: 600px) {
@@ -328,6 +339,7 @@ input {
     font-size: 12px;
     top: 70px;
   }
+  
 
 }
 
@@ -342,13 +354,12 @@ input {
   <div class="title">Костикова Алиса 10 "Г"</div>
 </div>
 
-<button class="button" onclick="togglePanel()">Переводчик</button>
+<button class="button" onclick="togglePanel()">SLANG ↔ FORMAL</button>
 
 <div class="panel" id="panel">
-
 <div class="back-btn" onclick="togglePanel()">← Назад</div>
 
-  <h2>Разговорный - Формальный</h2>
+  <h2>Разговорный ↔ Формальный</h2>
   <input id="input" placeholder="I'm dead bro">
   <button onclick="translate()">Перевести</button>
   <div class="result" id="output"></div>
