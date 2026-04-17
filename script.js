@@ -85,5 +85,7 @@ window.translate = translate;
 window.togglePanel = togglePanel;
 window.flipCard = flipCard;
 
-document.getElementById("translateBtn")
-  .addEventListener("click", translate);
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("translateBtn")
+    .addEventListener("click", translate);
+});
